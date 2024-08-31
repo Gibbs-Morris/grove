@@ -19,6 +19,12 @@
       "commands": [
         "dotnet-gitversion"
       ]
+    },
+    "dotnet-coverage": {
+      "version": "17.12.2",
+      "commands": [
+        "dotnet-coverage"
+      ]
     }
   }
 }
