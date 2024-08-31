@@ -70,7 +70,7 @@ jobs:
           distribution: microsoft
           java-version: "21"
 
-      - name: Setup dotNet
+      - name: Setup Dotnet
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 8.0.x
@@ -83,7 +83,7 @@ jobs:
 
       - name: Sonar restore-build-report
         run: |
-          dotnet dotnet-sonarscanner begin /k:"Gibbs-Morris_grove" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /v:${{env.GitVersion_SemVer}} /d:"sonar.cs.vscoveragexml.reportsPaths=coverage.xml"
+          dotnet dotnet-sonarscanner begin /k:"Gibbs-Morris_grove" /o:"gibbs-morris" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /v:${{env.GitVersion_SemVer}} /d:"sonar.cs.vscoveragexml.reportsPaths=coverage.xml"
           dotnet restore ${{ github.workspace }}/src/grove.sln
           dotnet build ${{ github.workspace }}/src/grove.sln --configuration Release --no-restore --no-incremental -warnaserror -p:Version=${{ steps.gitversion.outputs.MajorMinorPatch }}
           dotnet-coverage collect "dotnet test ${{ github.workspace }}/src/grove.sln -p:Version=${{ steps.gitversion.outputs.MajorMinorPatch }} --no-restore --verbosity normal"  -f xml -o "coverage.xml"
