@@ -13,5 +13,5 @@ public static class Sample
     /// <summary>
     ///     Gets the constant data value.
     /// </summary>
-    public static string Data => DataValue;
+    public static string Data => DataValue + "abc";
 }
