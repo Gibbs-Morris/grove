@@ -1,4 +1,4 @@
-name: SonarCloud
+name: Stryker
 on:
   push:
     branches:
@@ -9,8 +9,8 @@ on:
       - main
       - feature/**
 jobs:
-  Build:
-    name: "Build"
+  Stryker:
+    name: "Stryker"
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -58,7 +58,7 @@ jobs:
           dotnet tool restore
           dotnet tool install dotnet-stryker
 
-      - name: Sonar restore-build-report
+      - name: Stryker restore-build-report
         run: |
           dotnet restore ${{ github.workspace }}/src/grove.sln
           dotnet build ${{ github.workspace }}/src/grove.sln --configuration Release --no-restore --no-incremental -p:Version=${{ steps.gitversion.outputs.MajorMinorPatch }}

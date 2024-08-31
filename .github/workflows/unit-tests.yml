@@ -1,4 +1,4 @@
-name: "Build (perfect)"
+name: "Tests"
 on:
   push:
     branches:
@@ -11,7 +11,7 @@ on:
 
 jobs:
   Build:
-    name: "Build"
+    name: "Unit Tests"
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
