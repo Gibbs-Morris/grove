@@ -62,7 +62,8 @@ jobs:
         run: |
           dotnet restore ${{ github.workspace }}/src/grove.sln
           dotnet build ${{ github.workspace }}/src/grove.sln --configuration Release --no-restore --no-incremental -p:Version=${{ steps.gitversion.outputs.MajorMinorPatch }}
-          dotnet stryker --solution "${{ github.workspace }}/src/grove.sln"
+          cd ${{ github.workspace }}/src
+          dotnet stryker
 
       - name: Upload HTML Results
         uses: actions/upload-artifact@v4
