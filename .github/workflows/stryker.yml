@@ -1,0 +1,71 @@
+name: SonarCloud
+on:
+  push:
+    branches:
+      - main
+  merge_group:
+  pull_request:
+    branches:
+      - main
+      - feature/**
+jobs:
+  Build:
+    name: "Build"
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Cache GitVersion tools
+        uses: actions/cache@v2
+        with:
+          path: ~/.gitversion
+          key: ${{ runner.os }}-gitversion
+          restore-keys: ${{ runner.os }}-gitversion
+
+      - name: Cache nugets
+        uses: actions/cache@v2
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+
+      - name: Install GitVersion
+        uses: gittools/actions/gitversion/setup@v3.0.0
+        with:
+          versionSpec: "6.x"
+
+      - name: Determine Version
+        id: gitversion
+        uses: gittools/actions/gitversion/execute@v3.0.0
+        with:
+          useConfigFile: true
+
+      - name: Setup Dotnet
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Restore dotnet packages
+        run: |
+          dotnet tool restore
+          dotnet tool install dotnet-stryker
+
+      - name: Sonar restore-build-report
+        run: |
+          dotnet restore ${{ github.workspace }}/src/grove.sln
+          dotnet build ${{ github.workspace }}/src/grove.sln --configuration Release --no-restore --no-incremental -p:Version=${{ steps.gitversion.outputs.MajorMinorPatch }}
+          dotnet stryker --solution "${{ github.workspace }}/src/grove.sln"
+
+      - name: Upload HTML Results
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results-${{ github.event.repository.name }}-pr${{ github.event.pull_request.number }}
+          path: ${{ github.workspace }}/src/StrykerOutput/**/**/*.html

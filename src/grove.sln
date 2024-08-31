@@ -16,6 +16,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "github", "github", "{9C01946A-C158-4F2D-BB69-654A7496B1B1}"
 	ProjectSection(SolutionItems) = preProject
 		..\.github\workflows\sonar-cloud.yml = ..\.github\workflows\sonar-cloud.yml
+		..\.github\workflows\full-build.yml = ..\.github\workflows\full-build.yml
+		..\.github\workflows\unit-tests.yml = ..\.github\workflows\unit-tests.yml
 	EndProjectSection
 EndProject
 Global
