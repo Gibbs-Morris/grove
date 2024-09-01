@@ -1,7 +1,7 @@
 using Allure.Xunit.Attributes;
 
 
-namespace Core.Tests;
+namespace Grove.Core.Tests;
 
 /// <summary>
 ///     Contains unit tests for the <see cref="Sample" /> class.

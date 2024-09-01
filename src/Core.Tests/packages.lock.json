@@ -1067,7 +1067,7 @@
           "xunit.abstractions": "2.0.3"
         }
       },
-      "core": {
+      "Grove.Core": {
         "type": "Project"
       }
     }

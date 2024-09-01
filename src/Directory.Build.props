@@ -4,11 +4,16 @@
         <WarningsAsErrors>false</WarningsAsErrors>
         <AnalysisMode>All</AnalysisMode>
         <TargetFramework>net8.0</TargetFramework>
+        <LangVersion>12.0</LangVersion>
         <ImplicitUsings>false</ImplicitUsings>
         <Nullable>enable</Nullable>
         <ServerGarbageCollection>true</ServerGarbageCollection>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+        <RepositoryType>git</RepositoryType>
+        <IncludeSymbols>true</IncludeSymbols>
+        <IncludeSource>true</IncludeSource>
+        <RepositoryUrl>https://github.com/Gibbs-Morris/grove</RepositoryUrl>
         <!-- 
         NoWarnCodeStyle Warnings:
           SA1633: File must have header.
@@ -35,6 +40,10 @@
         <!-- Combine all the warnings to suppress -->
         <NoWarn>$(NoWarnCodeStyle),$(NoWarnCodeAnalysis)</NoWarn>
 
+
+        <AssemblyName>Grove.$(MSBuildProjectName)</AssemblyName>
+        <RootNamespace>Grove.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+        
     </PropertyGroup>
 
 
