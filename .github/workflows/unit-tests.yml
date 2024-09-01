@@ -72,5 +72,5 @@ jobs:
       - name: Upload Allure Report
         uses: actions/upload-artifact@v3
         with:
-          name: allure-test-results-${{ github.event.repository.name }}-pr${{ github.event.pull_request.number }}
+          name: allure-test-results-${{ github.event.repository.name }}-pr${{ github.event.pull_request.number }}-v${{ steps.gitversion.outputs.SemVer }}
           path: ${{ github.workspace }}/allure-report

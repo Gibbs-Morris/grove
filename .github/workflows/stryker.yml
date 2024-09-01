@@ -68,5 +68,5 @@ jobs:
       - name: Upload HTML Results
         uses: actions/upload-artifact@v4
         with:
-          name: test-results-${{ github.event.repository.name }}-pr${{ github.event.pull_request.number }}
+          name: test-results-${{ github.event.repository.name }}-pr${{ github.event.pull_request.number }}-v${{ steps.gitversion.outputs.SemVer }}
           path: ${{ github.workspace }}/src/StrykerOutput/**/**/*.html
