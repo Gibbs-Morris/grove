@@ -70,7 +70,7 @@ jobs:
           allure generate ${{ github.workspace }}/test-results -o ${{ github.workspace }}/allure-report
 
       - name: Upload Allure Report
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: allure-test-results-${{ github.event.repository.name }}-pr${{ github.event.pull_request.number }}-v${{ steps.gitversion.outputs.SemVer }}
           path: ${{ github.workspace }}/allure-report
