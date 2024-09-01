@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{91C08EEA-7844-4880-917B-37B061BDDF7F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Tests", "Core.Tests\Core.Tests.csproj", "{4191B75D-7328-415E-9043-B997815CF390}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{C446EC76-D901-4422-9D67-259AE1D2446B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "net", "net", "{6AE05185-4E69-41F4-A9C2-F01D0FB46460}"
+	ProjectSection(SolutionItems) = preProject
+		Directory.Build.props = Directory.Build.props
+		Directory.Packages.props = Directory.Packages.props
+		grove.sln.DotSettings = grove.sln.DotSettings
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "github", "github", "{9C01946A-C158-4F2D-BB69-654A7496B1B1}"
+	ProjectSection(SolutionItems) = preProject
+		..\.github\workflows\sonar-cloud.yml = ..\.github\workflows\sonar-cloud.yml
+		..\.github\workflows\full-build.yml = ..\.github\workflows\full-build.yml
+		..\.github\workflows\unit-tests.yml = ..\.github\workflows\unit-tests.yml
+		..\.github\workflows\stryker.yml = ..\.github\workflows\stryker.yml
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{91C08EEA-7844-4880-917B-37B061BDDF7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{91C08EEA-7844-4880-917B-37B061BDDF7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{91C08EEA-7844-4880-917B-37B061BDDF7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{91C08EEA-7844-4880-917B-37B061BDDF7F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4191B75D-7328-415E-9043-B997815CF390}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4191B75D-7328-415E-9043-B997815CF390}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4191B75D-7328-415E-9043-B997815CF390}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4191B75D-7328-415E-9043-B997815CF390}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{6AE05185-4E69-41F4-A9C2-F01D0FB46460} = {C446EC76-D901-4422-9D67-259AE1D2446B}
+		{9C01946A-C158-4F2D-BB69-654A7496B1B1} = {C446EC76-D901-4422-9D67-259AE1D2446B}
+	EndGlobalSection
+EndGlobal
