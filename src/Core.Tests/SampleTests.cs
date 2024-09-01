@@ -1,5 +1,3 @@
-using System.Threading.Tasks;
-
 using Allure.Xunit.Attributes;
 
 
@@ -26,20 +24,5 @@ public class SampleTests
     {
         var data = Sample.Data;
         Assert.Equal("Hello World!abc", data);
-    }
-
-    /// <summary>
-    ///     Asynchronously tests if a hardcoded string equals "Hello World!abc".
-    /// </summary>
-    [AllureStory("EE-12", "EE-22")]
-    [AllureIssue("EE-yy")]
-    [AllureDescription("This is a test description")]
-    [AllureId("abcd-1239")]
-    [AllureLabel("severity", "minor")]
-    [Fact]
-    public async Task ReturnsHelloWorld2Async()
-    {
-        await Task.Delay(1500);
-        Assert.Equal("Hello World!abc", "abc");
     }
 }

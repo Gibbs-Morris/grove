@@ -15,7 +15,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest]
+        os: [ ubuntu-latest ]
 
     steps:
       - name: Checkout
@@ -44,7 +44,7 @@ jobs:
           versionSpec: "6.x"
 
       - name: Determine Version
-        id: gitversion  
+        id: gitversion
         uses: gittools/actions/gitversion/execute@v3.0.0
         with:
           useConfigFile: true
