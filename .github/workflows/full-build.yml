@@ -56,4 +56,4 @@ jobs:
         # Note -warnaserror here.
       - name: Build dotnet projects
         run: |
-          dotnet build ${{ github.workspace }}/src/grove.sln --configuration Release --no-restore --no-incremental -warnaserror -p:Version=${{ steps.gitversion.outputs.FullSemVer }}
+          dotnet build ${{ github.workspace }}/src/grove.sln --configuration Release --no-restore --no-incremental -warnaserror -p:Version=${{ steps.gitversion.outputs.SemVer }}

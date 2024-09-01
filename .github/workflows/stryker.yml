@@ -61,12 +61,12 @@ jobs:
       - name: Stryker restore-build-report
         run: |
           dotnet restore ${{ github.workspace }}/src/grove.sln
-          dotnet build ${{ github.workspace }}/src/grove.sln --configuration Release --no-restore --no-incremental -p:Version=${{ steps.gitversion.outputs.MajorMinorPatch }}
+          dotnet build ${{ github.workspace }}/src/grove.sln --configuration Release --no-restore --no-incremental -p:Version=${{ steps.gitversion.outputs.SemVer }}
           cd ${{ github.workspace }}/src
           dotnet stryker
 
       - name: Upload HTML Results
         uses: actions/upload-artifact@v4
         with:
-          name: test-results-${{ github.event.repository.name }}-pr${{ github.event.pull_request.number }}-v${{ steps.gitversion.outputs.SemVer }}
+          name: test-results-${{ github.event.repository.name }}-v${{ steps.gitversion.outputs.SemVer }}
           path: ${{ github.workspace }}/src/StrykerOutput/**/**/*.html
