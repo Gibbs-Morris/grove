@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 
@@ -35,6 +36,7 @@ public sealed class EnumerableMapper<TFrom, TTo> : IEnumerableMapper<TFrom, TTo>
         IEnumerable<TFrom> input
     )
     {
+        ArgumentNullException.ThrowIfNull(input);
         return input.Select(item => Mapper.Map(item));
     }
 }

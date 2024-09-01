@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -12,19 +13,19 @@ namespace Grove.Core.Tests.Mapping;
 public class AsyncEnumerableMapperTests
 {
     [Fact]
-    public async Task MapsAsyncCollectionCorrectly()
+    public async Task MapsAsyncCollectionCorrectlyAsync()
     {
-        var mockMapper = new Mock<IMapper<int, string>>();
+        Mock<IMapper<int, string>> mockMapper = new();
         mockMapper.Setup(m => m.Map(It.IsAny<int>())).Returns<int>(i => i.ToString());
-        var asyncEnumerableMapper = new AsyncEnumerableMapper<int, string>(mockMapper.Object);
-        var input = GetAsyncEnumerable(
+        AsyncEnumerableMapper<int, string> asyncEnumerableMapper = new(mockMapper.Object);
+        IAsyncEnumerable<int> input = GetAsyncEnumerableAsync(
             new List<int>
             {
                 1,
                 2,
                 3,
             });
-        var result = await asyncEnumerableMapper.Map(input).ToListAsync();
+        List<string> result = await asyncEnumerableMapper.Map(input).ToListAsync();
         Assert.Equal(
             new List<string>
             {
@@ -36,29 +37,29 @@ public class AsyncEnumerableMapperTests
     }
 
     [Fact]
-    public async Task MapsEmptyAsyncCollection()
+    public async Task MapsEmptyAsyncCollectionAsync()
     {
-        var mockMapper = new Mock<IMapper<int, string>>();
-        var asyncEnumerableMapper = new AsyncEnumerableMapper<int, string>(mockMapper.Object);
-        var input = GetAsyncEnumerable(new List<int>());
-        var result = await asyncEnumerableMapper.Map(input).ToListAsync();
+        Mock<IMapper<int, string>> mockMapper = new();
+        AsyncEnumerableMapper<int, string> asyncEnumerableMapper = new(mockMapper.Object);
+        IAsyncEnumerable<int> input = GetAsyncEnumerableAsync(new List<int>());
+        List<string> result = await asyncEnumerableMapper.Map(input).ToListAsync();
         Assert.Empty(result);
     }
 
     [Fact]
-    public async Task MapsAsyncCollectionWithNullElements()
+    public async Task MapsAsyncCollectionWithNullElementsAsync()
     {
-        var mockMapper = new Mock<IMapper<int?, string>>();
+        Mock<IMapper<int?, string>> mockMapper = new();
         mockMapper.Setup(m => m.Map(It.IsAny<int?>())).Returns<int?>(i => i?.ToString() ?? "null");
-        var asyncEnumerableMapper = new AsyncEnumerableMapper<int?, string>(mockMapper.Object);
-        var input = GetAsyncEnumerable(
+        AsyncEnumerableMapper<int?, string> asyncEnumerableMapper = new(mockMapper.Object);
+        IAsyncEnumerable<int?> input = GetAsyncEnumerableAsync(
             new List<int?>
             {
                 1,
                 null,
                 3,
             });
-        var result = await asyncEnumerableMapper.Map(input).ToListAsync();
+        List<string> result = await asyncEnumerableMapper.Map(input).ToListAsync();
         Assert.Equal(
             new List<string>
             {
@@ -69,11 +70,18 @@ public class AsyncEnumerableMapperTests
             result);
     }
 
-    private async IAsyncEnumerable<T> GetAsyncEnumerable<T>(
+    /// <summary>
+    ///     Asynchronously enumerates a collection of items.
+    /// </summary>
+    /// <typeparam name="T">The type of the items in the collection.</typeparam>
+    /// <param name="items">The collection of items to enumerate.</param>
+    /// <returns>An asynchronous enumerable of the items.</returns>
+    private static async IAsyncEnumerable<T> GetAsyncEnumerableAsync<T>(
         IEnumerable<T> items
     )
     {
-        foreach (var item in items)
+        ArgumentNullException.ThrowIfNull(items);
+        foreach (T item in items)
         {
             yield return item;
             await Task.Yield();

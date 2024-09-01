@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 
 namespace Grove.Core.Mapping;
@@ -31,13 +32,16 @@ public sealed class AsyncEnumerableMapper<TFrom, TTo> : IAsyncEnumerableMapper<T
     /// </summary>
     /// <param name="input">The source asynchronous collection to map from.</param>
     /// <returns>The mapped asynchronous collection of objects of type <typeparamref name="TTo" />.</returns>
+#pragma warning disable S4456
     public async IAsyncEnumerable<TTo> Map(
         IAsyncEnumerable<TFrom> input
     )
     {
-        await foreach (var item in input)
+        ArgumentNullException.ThrowIfNull(input);
+        await foreach (TFrom item in input)
         {
             yield return Mapper.Map(item);
         }
     }
+#pragma warning restore S4456
 }

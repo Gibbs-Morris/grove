@@ -22,7 +22,7 @@ public class SampleTests
     [AllureLabel("severity", "critical")]
     public void ReturnsHelloWorld()
     {
-        var data = Sample.Data;
+        string data = Sample.Data;
         Assert.Equal("Hello World!abc", data);
     }
 }

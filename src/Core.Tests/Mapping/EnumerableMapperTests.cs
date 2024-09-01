@@ -13,10 +13,10 @@ public class EnumerableMapperTests
     public void MapsCollectionCorrectly()
     {
         // Arrange
-        var mockMapper = new Mock<IMapper<int, string>>();
+        Mock<IMapper<int, string>> mockMapper = new Mock<IMapper<int, string>>();
         mockMapper.Setup(m => m.Map(It.IsAny<int>())).Returns<int>(i => i.ToString());
-        var enumerableMapper = new EnumerableMapper<int, string>(mockMapper.Object);
-        var input = new List<int>
+        EnumerableMapper<int, string> enumerableMapper = new EnumerableMapper<int, string>(mockMapper.Object);
+        List<int> input = new List<int>
         {
             1,
             2,
@@ -24,7 +24,7 @@ public class EnumerableMapperTests
         };
 
         // Act
-        var result = enumerableMapper.Map(input);
+        IEnumerable<string> result = enumerableMapper.Map(input);
 
         // Assert
         Assert.Equal(
@@ -41,12 +41,12 @@ public class EnumerableMapperTests
     public void MapsEmptyCollection()
     {
         // Arrange
-        var mockMapper = new Mock<IMapper<int, string>>();
-        var enumerableMapper = new EnumerableMapper<int, string>(mockMapper.Object);
-        var input = new List<int>();
+        Mock<IMapper<int, string>> mockMapper = new Mock<IMapper<int, string>>();
+        EnumerableMapper<int, string> enumerableMapper = new EnumerableMapper<int, string>(mockMapper.Object);
+        List<int> input = new List<int>();
 
         // Act
-        var result = enumerableMapper.Map(input);
+        IEnumerable<string> result = enumerableMapper.Map(input);
 
         // Assert
         Assert.Empty(result);
@@ -56,10 +56,10 @@ public class EnumerableMapperTests
     public void MapsCollectionWithNullElements()
     {
         // Arrange
-        var mockMapper = new Mock<IMapper<int?, string>>();
+        Mock<IMapper<int?, string>> mockMapper = new Mock<IMapper<int?, string>>();
         mockMapper.Setup(m => m.Map(It.IsAny<int?>())).Returns<int?>(i => i?.ToString() ?? "null");
-        var enumerableMapper = new EnumerableMapper<int?, string>(mockMapper.Object);
-        var input = new List<int?>
+        EnumerableMapper<int?, string> enumerableMapper = new EnumerableMapper<int?, string>(mockMapper.Object);
+        List<int?> input = new List<int?>
         {
             1,
             null,
@@ -67,7 +67,7 @@ public class EnumerableMapperTests
         };
 
         // Act
-        var result = enumerableMapper.Map(input);
+        IEnumerable<string> result = enumerableMapper.Map(input);
 
         // Assert
         Assert.Equal(
