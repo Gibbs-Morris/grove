@@ -18,9 +18,24 @@ public class SampleTests
     [AllureStory("EE-11", "EE-22")]
     [AllureIssue("EE-xx")]
     [AllureDescription("This is a test description")]
+    [AllureId("abcd-1234")]
+    [AllureLabel("severity", "critical")]
     public void ReturnsHelloWorld()
     {
         var data = Sample.Data;
         Assert.Equal("Hello World!abc", data);
+    }
+
+    /// <summary>
+    ///     Tests if a hardcoded string equals "Hello World!abc".
+    /// </summary>
+    [AllureStory("EE-12", "EE-22")]
+    [AllureIssue("EE-yy")]
+    [AllureDescription("This is a test description")]
+    [AllureId("abcd-1239")]
+    [AllureLabel("severity", "minor")]
+    public void ReturnsHelloWorld2()
+    {
+        Assert.Equal("Hello World!abc", "abc");
     }
 }
