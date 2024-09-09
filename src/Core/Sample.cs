@@ -1,4 +1,4 @@
-﻿namespace Core;
+﻿namespace Grove.Core;
 
 /// <summary>
 ///     A static class that provides sample data.
