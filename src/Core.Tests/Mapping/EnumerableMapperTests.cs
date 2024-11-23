@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Threading.Tasks;
 
 using Grove.Core.Mapping;
 
@@ -66,7 +64,7 @@ public class EnumerableMapperTests
         // Assert
         Assert.Empty(result);
     }
-    
+
     /// <summary>
     ///     Tests that passing a null value to the Map function throws an ArgumentNullException.
     /// </summary>
