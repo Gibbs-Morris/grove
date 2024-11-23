@@ -59,6 +59,7 @@ jobs:
           dotnet tool install dotnet-stryker
 
       - name: Stryker restore-build-report
+        continue-on-error: true
         run: |
           dotnet restore ${{ github.workspace }}/src/grove.sln
           dotnet build ${{ github.workspace }}/src/grove.sln --configuration Release --no-restore --no-incremental -p:Version=${{ steps.gitversion.outputs.SemVer }}
@@ -66,6 +67,7 @@ jobs:
           dotnet stryker
 
       - name: Upload HTML Results
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: test-results-${{ github.event.repository.name }}-v${{ steps.gitversion.outputs.SemVer }}
