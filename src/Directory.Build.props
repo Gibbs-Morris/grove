@@ -3,8 +3,8 @@
         <Deterministic>true</Deterministic>
         <WarningsAsErrors>false</WarningsAsErrors>
         <AnalysisMode>All</AnalysisMode>
-        <TargetFramework>net8.0</TargetFramework>
-        <LangVersion>12.0</LangVersion>
+        <TargetFramework>net9.0</TargetFramework>
+        <LangVersion>13.0</LangVersion>
         <ImplicitUsings>false</ImplicitUsings>
         <Nullable>enable</Nullable>
         <ServerGarbageCollection>true</ServerGarbageCollection>
