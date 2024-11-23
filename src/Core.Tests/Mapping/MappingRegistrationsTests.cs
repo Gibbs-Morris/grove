@@ -10,7 +10,7 @@ public class MappingRegistrationsTests
     [Fact]
     public void AddsMapperToServiceCollection()
     {
-        ServiceCollection services = new ServiceCollection();
+        ServiceCollection services = new();
         services.AddMapper<int, string, MockMapper>();
         using ServiceProvider serviceProvider = services.BuildServiceProvider();
         IMapper<int, string>? mapper = serviceProvider.GetService<IMapper<int, string>>();
@@ -21,7 +21,7 @@ public class MappingRegistrationsTests
     [Fact]
     public void AddsIEnumerableMapperToServiceCollection()
     {
-        ServiceCollection services = new ServiceCollection();
+        ServiceCollection services = new();
         services.AddMapper<int, string, MockMapper>();
         services.AddIEnumerableMapper();
         using ServiceProvider serviceProvider = services.BuildServiceProvider();
@@ -33,7 +33,7 @@ public class MappingRegistrationsTests
     [Fact]
     public void AddsIAsyncEnumerableMapperToServiceCollection()
     {
-        ServiceCollection services = new ServiceCollection();
+        ServiceCollection services = new();
         services.AddMapper<int, string, MockMapper>();
         services.AddIAsyncEnumerableMapper();
         using ServiceProvider serviceProvider = services.BuildServiceProvider();
