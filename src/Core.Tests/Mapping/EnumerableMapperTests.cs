@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
+using System.Threading.Tasks;
 
 using Grove.Core.Mapping;
 
@@ -63,6 +66,20 @@ public class EnumerableMapperTests
         // Assert
         Assert.Empty(result);
     }
+    
+    /// <summary>
+    ///     Tests that passing a null value to the Map function throws an ArgumentNullException.
+    /// </summary>
+    [Fact]
+    public void MapNullInputThrowsArgumentNullException()
+    {
+        // Arrange
+        Mock<IMapper<int, string>> mockMapper = new();
+        EnumerableMapper<int, string> enumerableMapper = new(mockMapper.Object);
+
+        // Act & Assert
+        Assert.Throws<ArgumentNullException>(() => enumerableMapper.Map(null!));
+    }
 
     /// <summary>
     ///     Tests that a collection containing nullable integers, including null elements,
@@ -73,7 +90,8 @@ public class EnumerableMapperTests
     {
         // Arrange
         Mock<IMapper<int?, string>> mockMapper = new();
-        mockMapper.Setup(m => m.Map(It.IsAny<int?>())).Returns<int?>(i => i?.ToString(CultureInfo.InvariantCulture) ?? "null");
+        mockMapper.Setup(m => m.Map(It.IsAny<int?>()))
+            .Returns<int?>(i => i?.ToString(CultureInfo.InvariantCulture) ?? "null");
         EnumerableMapper<int?, string> enumerableMapper = new(mockMapper.Object);
         List<int?> input = new()
         {

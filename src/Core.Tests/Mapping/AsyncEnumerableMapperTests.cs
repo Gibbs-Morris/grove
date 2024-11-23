@@ -70,6 +70,22 @@ public class AsyncEnumerableMapperTests
     }
 
     /// <summary>
+    ///     Tests that passing a null value to the Map function throws an ArgumentNullException.
+    /// </summary>
+    /// <returns>A task representing the asynchronous operation.</returns>
+    [Fact]
+    public async Task MapNullInputThrowsArgumentNullExceptionAsync()
+    {
+        // Arrange
+        Mock<IMapper<int, string>> mockMapper = new();
+        AsyncEnumerableMapper<int, string> asyncEnumerableMapper = new(mockMapper.Object);
+
+        // Act & Assert
+        await Assert.ThrowsAsync<ArgumentNullException>(
+            async () => await asyncEnumerableMapper.Map(null!).ToListAsync());
+    }
+
+    /// <summary>
     ///     Tests that an asynchronous collection with null elements is mapped correctly, with null elements represented as
     ///     "null".
     /// </summary>
@@ -79,7 +95,8 @@ public class AsyncEnumerableMapperTests
     {
         // Arrange
         Mock<IMapper<int?, string>> mockMapper = new();
-        mockMapper.Setup(m => m.Map(It.IsAny<int?>())).Returns<int?>(i => i?.ToString(CultureInfo.InvariantCulture) ?? "null");
+        mockMapper.Setup(m => m.Map(It.IsAny<int?>()))
+            .Returns<int?>(i => i?.ToString(CultureInfo.InvariantCulture) ?? "null");
         AsyncEnumerableMapper<int?, string> asyncEnumerableMapper = new(mockMapper.Object);
         IAsyncEnumerable<int?> input = GetAsyncEnumerableAsync(
             new List<int?>
@@ -109,7 +126,10 @@ public class AsyncEnumerableMapperTests
     /// <typeparam name="T">The type of the items in the collection.</typeparam>
     /// <param name="items">The collection of items to enumerate.</param>
     /// <returns>An asynchronous enumerable of the items.</returns>
-    [SuppressMessage("Major Code Smell", "S4456:Parameter validation in yielding methods should be wrapped", Justification = "Required for IAsyncEnumerable.")]
+    [SuppressMessage(
+        "Major Code Smell",
+        "S4456:Parameter validation in yielding methods should be wrapped",
+        Justification = "Required for IAsyncEnumerable.")]
     private static async IAsyncEnumerable<T> GetAsyncEnumerableAsync<T>(
         IEnumerable<T> items
     )

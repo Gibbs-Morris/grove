@@ -8,12 +8,12 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Grove.Core.Tests.Mapping;
 
 /// <summary>
-/// Contains unit tests for verifying the registration of mappers in the service collection.
+///     Contains unit tests for verifying the registration of mappers in the service collection.
 /// </summary>
 public class MappingRegistrationsTests
 {
     /// <summary>
-    /// Tests if a single mapper is correctly added to the service collection.
+    ///     Tests if a single mapper is correctly added to the service collection.
     /// </summary>
     [Fact]
     public void AddsMapperToServiceCollection()
@@ -27,7 +27,7 @@ public class MappingRegistrationsTests
     }
 
     /// <summary>
-    /// Tests if an IEnumerable mapper is correctly added to the service collection.
+    ///     Tests if an IEnumerable mapper is correctly added to the service collection.
     /// </summary>
     [Fact]
     public void AddsIEnumerableMapperToServiceCollection()
@@ -42,7 +42,7 @@ public class MappingRegistrationsTests
     }
 
     /// <summary>
-    /// Tests if an IAsyncEnumerable mapper is correctly added to the service collection.
+    ///     Tests if an IAsyncEnumerable mapper is correctly added to the service collection.
     /// </summary>
     [Fact]
     public void AddsIAsyncEnumerableMapperToServiceCollection()
@@ -57,13 +57,13 @@ public class MappingRegistrationsTests
     }
 
     /// <summary>
-    /// A mock implementation of the <see cref="IMapper{TFrom, TTo}"/> interface
-    /// for testing purposes.
+    ///     A mock implementation of the <see cref="IMapper{TFrom, TTo}" /> interface
+    ///     for testing purposes.
     /// </summary>
     private class MockMapper : IMapper<int, string>
     {
         /// <summary>
-        /// Maps an integer to its string representation.
+        ///     Maps an integer to its string representation.
         /// </summary>
         /// <param name="source">The integer to map.</param>
         /// <returns>The string representation of the integer.</returns>
