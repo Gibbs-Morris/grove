@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -10,13 +12,21 @@ using Moq;
 
 namespace Grove.Core.Tests.Mapping;
 
+/// <summary>
+///     Provides unit tests for the <see cref="AsyncEnumerableMapper{TFrom,TTo}" /> class.
+/// </summary>
 public class AsyncEnumerableMapperTests
 {
+    /// <summary>
+    ///     Tests that a non-empty asynchronous collection is mapped correctly.
+    /// </summary>
+    /// <returns>A task representing the asynchronous operation.</returns>
     [Fact]
     public async Task MapsAsyncCollectionCorrectlyAsync()
     {
+        // Arrange
         Mock<IMapper<int, string>> mockMapper = new();
-        mockMapper.Setup(m => m.Map(It.IsAny<int>())).Returns<int>(i => i.ToString());
+        mockMapper.Setup(m => m.Map(It.IsAny<int>())).Returns<int>(i => i.ToString(CultureInfo.InvariantCulture));
         AsyncEnumerableMapper<int, string> asyncEnumerableMapper = new(mockMapper.Object);
         IAsyncEnumerable<int> input = GetAsyncEnumerableAsync(
             new List<int>
@@ -25,7 +35,11 @@ public class AsyncEnumerableMapperTests
                 2,
                 3,
             });
+
+        // Act
         List<string> result = await asyncEnumerableMapper.Map(input).ToListAsync();
+
+        // Assert
         Assert.Equal(
             new List<string>
             {
@@ -36,21 +50,36 @@ public class AsyncEnumerableMapperTests
             result);
     }
 
+    /// <summary>
+    ///     Tests that an empty asynchronous collection is mapped to an empty collection.
+    /// </summary>
+    /// <returns>A task representing the asynchronous operation.</returns>
     [Fact]
     public async Task MapsEmptyAsyncCollectionAsync()
     {
+        // Arrange
         Mock<IMapper<int, string>> mockMapper = new();
         AsyncEnumerableMapper<int, string> asyncEnumerableMapper = new(mockMapper.Object);
         IAsyncEnumerable<int> input = GetAsyncEnumerableAsync(new List<int>());
+
+        // Act
         List<string> result = await asyncEnumerableMapper.Map(input).ToListAsync();
+
+        // Assert
         Assert.Empty(result);
     }
 
+    /// <summary>
+    ///     Tests that an asynchronous collection with null elements is mapped correctly, with null elements represented as
+    ///     "null".
+    /// </summary>
+    /// <returns>A task representing the asynchronous operation.</returns>
     [Fact]
     public async Task MapsAsyncCollectionWithNullElementsAsync()
     {
+        // Arrange
         Mock<IMapper<int?, string>> mockMapper = new();
-        mockMapper.Setup(m => m.Map(It.IsAny<int?>())).Returns<int?>(i => i?.ToString() ?? "null");
+        mockMapper.Setup(m => m.Map(It.IsAny<int?>())).Returns<int?>(i => i?.ToString(CultureInfo.InvariantCulture) ?? "null");
         AsyncEnumerableMapper<int?, string> asyncEnumerableMapper = new(mockMapper.Object);
         IAsyncEnumerable<int?> input = GetAsyncEnumerableAsync(
             new List<int?>
@@ -59,7 +88,11 @@ public class AsyncEnumerableMapperTests
                 null,
                 3,
             });
+
+        // Act
         List<string> result = await asyncEnumerableMapper.Map(input).ToListAsync();
+
+        // Assert
         Assert.Equal(
             new List<string>
             {
@@ -76,6 +109,7 @@ public class AsyncEnumerableMapperTests
     /// <typeparam name="T">The type of the items in the collection.</typeparam>
     /// <param name="items">The collection of items to enumerate.</param>
     /// <returns>An asynchronous enumerable of the items.</returns>
+    [SuppressMessage("Major Code Smell", "S4456:Parameter validation in yielding methods should be wrapped", Justification = "Required for IAsyncEnumerable.")]
     private static async IAsyncEnumerable<T> GetAsyncEnumerableAsync<T>(
         IEnumerable<T> items
     )
